@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="../static/webScript.js"></script>
     <style>
         body {
             background: linear-gradient(to right, #f6d365, #fda085);
@@ -16,7 +21,7 @@
             padding: 20px;
             margin: 20px auto;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .transaction-table {
@@ -28,11 +33,26 @@
             align-items: center;
             gap: 10px;
         }
+
+        .btn-primary {
+            background-color: #f6d365;
+            border-color: #f6d365;
+        }
+
+        .btn-primary:hover {
+            background-color: #f6d365;
+            border-color: #f6d365;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h1 class="text-center">Transaction Records</h1>
+        <h1 class="text-center">Transaction Records <a class="btn btn-sm btn-success"
+                href="{{ url_for('get_transactions') }}"><i class="fa-solid fa-house"></i></a>
+            <a class="btn btn-sm btn-success" href="{{ url_for('search_transactions') }}"><i
+                    class="fa-solid fa-magnifying-glass"></i></a>
+        </h1>
 
         <table class="table transaction-table">
             <thead>
@@ -48,8 +68,10 @@
                     <td>{{ transaction.date }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td class="transaction-actions">
-                        <a class="btn btn-sm btn-primary" href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
-                        <a class="btn btn-sm btn-danger" href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a>
+                        <a class="btn btn-sm btn-primary"
+                            href="{{ url_for('edit_transaction', transaction_id=transaction.id) }}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                            href="{{ url_for('delete_transaction', transaction_id=transaction.id) }}">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -59,6 +81,13 @@
         <div class="d-flex justify-content-center">
             <a class="btn btn-success" href="{{ url_for('add_transaction') }}">Add Transaction</a>
         </div>
+
+        <!-- Balance Button and Display -->
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-info" onclick="fetchBalance()">Show Balance</button>
+        </div>
+        <div class="text-center mt-2" id="balance-display"></div>
     </div>
 </body>
+
 </html>
